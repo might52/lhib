@@ -26,7 +26,9 @@ public class HelloHibernateTest {
         Configuration configuration = getConfiguration();
         // Add annotated class
         // configuration.addAnnotatedClass(RandomNumberPOJO.class);
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties())
+                .build();
         MetadataSources sources = new MetadataSources(serviceRegistry);
         sources.addAnnotatedClass(org.might.model.Message.class);
         Metadata metadata = sources.getMetadataBuilder().build();
@@ -48,6 +50,7 @@ public class HelloHibernateTest {
         configuration.setProperty("hibernate.connection.password", "postgres");
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         configuration.setProperty("hibernate.current_session_context_class", "thread");
+        configuration.setProperty("javax.persistence.validation.mode", "NONE");
         configuration.setProperty(HBM2DDL_AUTO, "create-drop");
         configuration.setProperty(FORMAT_SQL, "true");
         configuration.setProperty(USE_SQL_COMMENTS, "true");

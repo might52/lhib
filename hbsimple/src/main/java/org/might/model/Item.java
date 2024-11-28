@@ -3,7 +3,6 @@ package org.might.model;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,7 @@ import java.util.Set;
 
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@NoArgsConstructor
 @Entity
 public class Item implements Serializable {
     @Id

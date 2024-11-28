@@ -1,6 +1,5 @@
 package org.might.model;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@NoArgsConstructor
 @Entity
 public class Bid implements Serializable {
     @Id
