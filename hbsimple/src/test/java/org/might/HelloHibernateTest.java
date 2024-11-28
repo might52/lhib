@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.jupiter.api.Assertions;
@@ -14,10 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.might.model.Message;
 
 import java.util.List;
-
-import static org.hibernate.cfg.AvailableSettings.FORMAT_SQL;
-import static org.hibernate.cfg.AvailableSettings.HBM2DDL_AUTO;
-import static org.hibernate.cfg.AvailableSettings.USE_SQL_COMMENTS;
 
 @Slf4j
 public class HelloHibernateTest {
@@ -45,15 +42,16 @@ public class HelloHibernateTest {
         configuration.setProperty("hibernate.hikari.minimumIdle", "5");
         configuration.setProperty("hibernate.hikari.maximumPoolSize", "1");
         configuration.setProperty("hibernate.hikari.idleTimeout", "30000");
-        configuration.setProperty("hibernate.hikari.jdbcUrl", "jdbc:postgresql://localhost:5432/testdb");
-        configuration.setProperty("hibernate.connection.username", "postgres");
-        configuration.setProperty("hibernate.connection.password", "postgres");
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        configuration.setProperty("hibernate.current_session_context_class", "thread");
-        configuration.setProperty("javax.persistence.validation.mode", "NONE");
-        configuration.setProperty(HBM2DDL_AUTO, "create-drop");
-        configuration.setProperty(FORMAT_SQL, "true");
-        configuration.setProperty(USE_SQL_COMMENTS, "true");
+        configuration.setProperty(AvailableSettings.URL, "jdbc:postgresql://localhost:5432/testdb");
+        configuration.setProperty(AvailableSettings.USER, "postgres");
+        configuration.setProperty(AvailableSettings.PASS, "postgres");
+        configuration.setProperty(AvailableSettings.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
+        configuration.setProperty(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+        configuration.setProperty(AvailableSettings.JPA_VALIDATION_MODE, "NONE");
+        configuration.setProperty(AvailableSettings.GLOBALLY_QUOTED_IDENTIFIERS, "true");
+        configuration.setProperty(AvailableSettings.HBM2DDL_AUTO, "create-drop");
+        configuration.setProperty(AvailableSettings.FORMAT_SQL, "true");
+        configuration.setProperty(AvailableSettings.USE_SQL_COMMENTS, "true");
         return configuration;
     }
 
