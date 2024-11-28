@@ -33,7 +33,6 @@ public class ModelOperationsTest {
         assertTrue(anItem.getBids().contains(aBid));
         assertEquals(anItem, aBid.getItem());
 
-        // Again with convenience method
         Bid secondBid = new Bid();
         anItem.addBid(secondBid);
 
@@ -53,7 +52,6 @@ public class ModelOperationsTest {
 
         Set<ConstraintViolation<Item>> violations = validator.validate(item);
 
-        // We have one validation error, auction end date was not in the future!
         assertEquals(1, violations.size());
 
         ConstraintViolation<Item> violation = violations.iterator().next();
