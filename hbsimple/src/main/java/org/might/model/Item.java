@@ -3,11 +3,11 @@ package org.might.model;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.might.Constants;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,28 +18,29 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
 public class Item implements Serializable {
     @Id
     @GeneratedValue(generator = Constants.ID_GENERATOR)
-    protected Long id;
+    private Long id;
 
     @NotNull
     @Size(min = 1, max = 255, message = "Name is required, maximum 255 characters.")
-    protected String name;
-    protected String description;
-    protected Date createdOn;
-    protected Boolean verified;
-    protected AuctionType auctionType;
-    protected BigDecimal initialPrice;
-    protected Date auctionStart;
+    @Column(name = "ITEM_NAME") // Mappings are still expected here!
+    private String name;
+    private String description;
+    private Date createdOn;
+    private Boolean verified;
+    private AuctionType auctionType;
+    private BigDecimal initialPrice;
+    private Date auctionStart;
     @Future
-    protected Date auctionEnd;
+    private Date auctionEnd;
+
     @Transient
-    protected Set<Bid> bids = new HashSet<Bid>();
+    private Set<Bid> bids = new HashSet<Bid>();
 
     public void addBid(Bid bid) {
         if (bids == null) {

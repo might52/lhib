@@ -1,9 +1,10 @@
 package org.might.model;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.might.Constants;
 
 import javax.persistence.Entity;
@@ -12,17 +13,18 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@Entity
+@Entity(name = "USERS")
+@DynamicInsert
+@DynamicUpdate
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(generator = Constants.ID_GENERATOR)
-    protected Long id;
+    private Long id;
 
-    protected String username;
+    private String username;
 
     public BigDecimal calcShippingCoasts(Address fromLocation) {
         return null;

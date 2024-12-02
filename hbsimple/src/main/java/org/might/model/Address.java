@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.might.Constants;
 
 import javax.persistence.Entity;
@@ -15,12 +17,14 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
+@DynamicUpdate
 public class Address implements Serializable {
     @Id
     @GeneratedValue(generator = Constants.ID_GENERATOR)
-    protected Long id;
+    private Long id;
 
-    protected String street;
-    protected String city;
-    protected String zipcode;
+    private String street;
+    private String city;
+    private String zipcode;
 }
