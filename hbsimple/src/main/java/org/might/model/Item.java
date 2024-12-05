@@ -4,15 +4,24 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.ColumnTransformer;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.might.Constants;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -36,11 +45,34 @@ public class Item implements Serializable {
     private String shortDescription;
     @Formula("(select avg(b.AMOUNT) from BID b where b.ITEM_ID = ID)")
     private BigDecimal averageBidAmount;
+    @Column(name = "IMPERIALWEIGHT")
+    @ColumnTransformer(
+            read = "IMPERIALWEIGHT / 2.20462",
+            write = "? * 2.20462"
+    )
+    protected double metricWeight;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(insertable = false, updatable = false)
+    @Generated(GenerationTime.ALWAYS)
+    protected Date lastModified;
 
     private String description;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false)
+    @CreationTimestamp
     private Date createdOn;
+
     private Boolean verified;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private AuctionType auctionType;
+
+    @Column(insertable = false)
+    @ColumnDefault("1.00")
+    @Generated(GenerationTime.INSERT)
     private BigDecimal initialPrice;
     private Date auctionStart;
     @Future
@@ -152,4 +184,19 @@ public class Item implements Serializable {
         return bids;
     }
 
+    public double getMetricWeight() {
+        return metricWeight;
+    }
+
+    public void setMetricWeight(double metricWeight) {
+        this.metricWeight = metricWeight;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
 }

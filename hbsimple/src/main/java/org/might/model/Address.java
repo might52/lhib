@@ -1,30 +1,39 @@
 package org.might.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.might.Constants;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@Getter
-@Setter
-@Entity
-@DynamicInsert
-@DynamicUpdate
+@AllArgsConstructor
+@Embeddable
 public class Address implements Serializable {
-    @Id
-    @GeneratedValue(generator = Constants.ID_GENERATOR)
-    private Long id;
 
+    @NotNull
+    @Column(nullable = false)
     private String street;
-    private String city;
-    private String zipcode;
+
+    @NotNull
+    @AttributeOverrides(
+            @AttributeOverride(
+                    name = "name",
+                    column = @Column(name = "CITY", nullable = false)
+            )
+    )
+    private City city;
+
+    public @NotNull City getCity() {
+        return city;
+    }
+
+    public void setCity(@NotNull City city) {
+        this.city = city;
+    }
 }

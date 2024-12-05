@@ -6,6 +6,7 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.might.model.AuctionType;
 import org.might.model.Bid;
 import org.might.model.Item;
 
@@ -49,6 +50,7 @@ public class ModelOperationsTest {
         Item item = new Item();
         item.setName("Some Item");
         item.setAuctionEnd(new Date());
+        item.setAuctionType(AuctionType.HIGHEST_BID);
 
         Set<ConstraintViolation<Item>> violations = validator.validate(item);
 
