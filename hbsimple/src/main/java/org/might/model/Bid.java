@@ -1,6 +1,5 @@
 package org.might.model;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
 import org.might.Constants;
@@ -16,9 +15,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @NoArgsConstructor
-@Entity
 @Immutable
-@Data
+@Entity
 public class Bid implements Serializable {
     @Id
     @GeneratedValue(generator = Constants.ID_GENERATOR)
@@ -35,4 +33,35 @@ public class Bid implements Serializable {
         item.getBids().add(this); // Bidirectional
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 }

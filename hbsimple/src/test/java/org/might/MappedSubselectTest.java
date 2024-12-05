@@ -22,7 +22,7 @@ public class MappedSubselectTest {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         ItemBidSummary itemBidSummary = session.find(ItemBidSummary.class, ITEM_ID);
-        Assertions.assertEquals(itemBidSummary.getName(), "Some item");
+        Assertions.assertEquals(itemBidSummary.getName(), "AUCTION: Some item");
         Item item = session.find(Item.class, ITEM_ID);
         item.setName("New name");
         session.getTransaction().commit();
@@ -30,7 +30,7 @@ public class MappedSubselectTest {
         session.beginTransaction();
         Query query = session.createQuery("select ibs from ItemBidSummary ibs where ibs.itemid = :id");
         itemBidSummary = (ItemBidSummary) query.setParameter("id", ITEM_ID).getSingleResult();
-        Assertions.assertEquals(itemBidSummary.getName(), "New name");
+        Assertions.assertEquals(itemBidSummary.getName(), "AUCTION: New name");
         session.getTransaction().commit();
     }
 
