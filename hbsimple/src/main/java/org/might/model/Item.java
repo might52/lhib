@@ -12,11 +12,13 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Type;
 import org.might.Constants;
+import org.might.model.converter.MonetaryAmountConverter;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -62,9 +64,6 @@ public class Item implements Serializable {
     @Type(type = "yes_no")
     private Boolean verified;
 
-    public byte[] getImage() {
-        return image;
-    }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(insertable = false, updatable = false)
@@ -78,10 +77,6 @@ public class Item implements Serializable {
     @CreationTimestamp
     private Date createdOn;
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
     @NotNull
     @Enumerated(EnumType.STRING)
     private AuctionType auctionType;
@@ -90,6 +85,11 @@ public class Item implements Serializable {
     @ColumnDefault("1.00")
     @Generated(GenerationTime.INSERT)
     private BigDecimal initialPrice;
+
+    @NotNull
+    @Convert(converter = MonetaryAmountConverter.class)
+    @Column(name = "PRICE", length = 63)
+    private MonetaryAmount buyNowPrice;
     private Date auctionStart;
     @Future
     private Date auctionEnd;
@@ -114,6 +114,26 @@ public class Item implements Serializable {
         }
         getBids().add(bid);
         bid.setItem(this);
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public MonetaryAmount getBuyNowPrice() {
+        return buyNowPrice;
+    }
+
+    public void setBuyNowPrice(MonetaryAmount buyNowPrice) {
+        this.buyNowPrice = buyNowPrice;
+    }
+
+    public void setBids(Set<Bid> bids) {
+        this.bids = bids;
     }
 
     public Long getId() {

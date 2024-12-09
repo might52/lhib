@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.might.model.AuctionType;
 import org.might.model.Bid;
 import org.might.model.Item;
+import org.might.model.MonetaryAmount;
 
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
@@ -51,6 +54,7 @@ public class ModelOperationsTest {
         item.setName("Some Item");
         item.setAuctionEnd(new Date());
         item.setAuctionType(AuctionType.HIGHEST_BID);
+        item.setBuyNowPrice(new MonetaryAmount(new BigDecimal("100.00"), Currency.getInstance(Locale.getDefault())));
 
         Set<ConstraintViolation<Item>> violations = validator.validate(item);
 

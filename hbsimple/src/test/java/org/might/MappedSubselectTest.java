@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.might.model.Bid;
 import org.might.model.Item;
 import org.might.model.ItemBidSummary;
+import org.might.model.MonetaryAmount;
 
 import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.Locale;
 
 @Slf4j
 public class MappedSubselectTest {
@@ -39,6 +42,7 @@ public class MappedSubselectTest {
         Item item = new Item();
         item.setName("Some item");
         item.setDescription("This is some description.");
+        item.setBuyNowPrice(new MonetaryAmount(new BigDecimal("100.00"), Currency.getInstance(Locale.getDefault())));
         session.save(item);
         for (int i = 1; i <= 3; i++) {
             Bid bid = new Bid();
