@@ -10,16 +10,20 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.Type;
 import org.might.Constants;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -52,6 +56,16 @@ public class Item implements Serializable {
     )
     protected double metricWeight;
 
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    protected byte[] image;
+    @Type(type = "yes_no")
+    private Boolean verified;
+
+    public byte[] getImage() {
+        return image;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(insertable = false, updatable = false)
     @Generated(GenerationTime.ALWAYS)
@@ -64,7 +78,9 @@ public class Item implements Serializable {
     @CreationTimestamp
     private Date createdOn;
 
-    private Boolean verified;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     @NotNull
     @Enumerated(EnumType.STRING)
