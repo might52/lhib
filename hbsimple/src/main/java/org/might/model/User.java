@@ -4,10 +4,12 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.might.Constants;
+import org.might.model.converter.ZipcodeConverter;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,10 @@ public class User implements Serializable {
 
     private String username;
 
+    @Convert(
+            converter = ZipcodeConverter.class,
+            attributeName = "city.zipcode"
+    )
     private Address homeAddress;
 
     @Embedded
