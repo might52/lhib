@@ -87,6 +87,13 @@ public class Item implements Serializable {
     private BigDecimal initialPrice;
 
     @NotNull
+//    @org.hibernate.annotations.Type(
+//            type = "monetary_amount_usd"
+//    )
+//    @org.hibernate.annotations.Columns(columns = {
+//            @Column(name = "BUYNOWPRICE_AMOUNT"),
+//            @Column(name = "BUYNOWPRICE_CURRENCY", length = 3)
+//    })
     @Convert(converter = MonetaryAmountConverter.class)
     @Column(name = "PRICE", length = 63)
     private MonetaryAmount buyNowPrice;
