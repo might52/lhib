@@ -8,3 +8,5 @@ EOSQL
 
 #su postgres
 #echo "host all all all $POSTGRES_HOST_AUTH_METHOD" >> pg_hba.conf
+# in case when you have a problem with execution scripts please add execution rights
+# to the script.
