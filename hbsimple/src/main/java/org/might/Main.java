@@ -55,7 +55,9 @@ public class Main extends Application {
     }
 
     private TreeTableView<String> getTreeTableView() {
-        TreeTableView<String> treeTableView = new TreeTableView<>(getTree());
+        TreeItem<String> tree = getTree();
+        tree.getChildren().forEach(el -> el.getChildren().add(getTree()));
+        TreeTableView<String> treeTableView = new TreeTableView<>(tree);
         treeTableView.setEditable(true);
         treeTableView.setShowRoot(true);
         treeTableView.setMinHeight(500);
@@ -87,7 +89,8 @@ public class Main extends Application {
         );
         columns.add(col4);
         treeTableView.getColumns().setAll(columns);
-        treeTableView.getTreeItem(0).getChildren().forEach(el -> el.getChildren().add(getTree()));
+        treeTableView.getTreeItem(0).getChildren().forEach(el ->
+                el.getChildren().add(getTree()));
         return treeTableView;
     }
 
